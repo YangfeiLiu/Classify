@@ -125,3 +125,9 @@ class GoogleNet(nn.Module):
 
 def googlenet(num_classes):
     return GoogleNet(num_class=num_classes)
+
+
+if __name__ == '__main__':
+    net = googlenet(10)
+    x = torch.randn(size=[1, 3, 256, 256])
+    print(net(x))

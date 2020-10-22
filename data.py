@@ -14,7 +14,7 @@ class ClassifyData(Dataset):
                                       RandomResizedCrop(width=size, height=size, scale=(0.8, 1.2)),
                                       ])
         else:
-            self.data_list = open(os.path.join(root, 'val.txt'), 'r').readlines()
+            self.data_list = open(os.path.join(root, 'valid.txt'), 'r').readlines()
             self.transform = Compose([Resize(width=size, height=size)])
 
     def __getitem__(self, item):

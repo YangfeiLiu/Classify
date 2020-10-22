@@ -10,8 +10,9 @@ for dataset_name in os.listdir(root):
     for i, x in enumerate(cls):
         cls_root = os.path.join(base_root, x)
         for pic in os.listdir(cls_root):
-            path = os.path.join(cls_root, pic)
-            trainval.append((path, i))
+            if pic.endswith('jpg') or pic.endswith('tif'):
+                path = os.path.join(cls_root, pic)
+                trainval.append((path, i))
     np.random.shuffle(trainval)
     valid = trainval[::5]
     train = [x for x in trainval if x not in valid]

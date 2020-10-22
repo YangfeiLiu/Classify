@@ -251,3 +251,9 @@ class ShuffleNet(nn.Module):
 
 def shufflenet(num_classes):
     return ShuffleNet([4, 8, 4], num_classes=num_classes)
+
+
+if __name__ == '__main__':
+    net = shufflenet(10)
+    x = torch.randn(size=[1, 3, 256, 256])
+    print(net(x))

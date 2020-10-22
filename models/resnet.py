@@ -157,5 +157,5 @@ def resnet152(num_classes):
 
 if __name__ == '__main__':
     from torchstat import stat
-    net = resnet50(35)
+    net = resnet34(35)
     stat(net, (3, 256, 256))

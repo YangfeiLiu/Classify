@@ -172,3 +172,9 @@ def seresnet101(num_classes):
 
 def seresnet152(num_classes):
     return SEResNet(BottleneckResidualSEBlock, [3, 8, 36, 3], class_num=num_classes)
+
+
+if __name__ == '__main__':
+    net = seresnet34(10)
+    x = torch.randn(size=[1, 3, 256, 256])
+    print(net(x))

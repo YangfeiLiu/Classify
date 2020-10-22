@@ -10,10 +10,10 @@ import math
 __all__ = ['ResNeXt', 'resnext18', 'resnext34', 'resnext50', 'resnext101',
            'resnext152']
 
-def conv3x3(in_planes, out_planes, stride=1):
+def conv3x3(in_planes, out_planes, stride=1, groups=1):
     """3x3 convolution with padding"""
     return nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,
-                     padding=1, bias=False)
+                     padding=1, bias=False, groups=groups)
 
 
 class BasicBlock(nn.Module):
@@ -24,8 +24,8 @@ class BasicBlock(nn.Module):
         self.conv1 = conv3x3(inplanes, planes*2, stride)
         self.bn1 = nn.BatchNorm2d(planes*2)
         self.relu = nn.ReLU(inplace=True)
-        self.conv2 = conv3x3(planes*2, planes*2, groups=num_group)
-        self.bn2 = nn.BatchNorm2d(planes*2)
+        self.conv2 = conv3x3(planes*2, planes*BasicBlock.expansion, groups=num_group)
+        self.bn2 = nn.BatchNorm2d(planes*BasicBlock.expansion)
         self.downsample = downsample
         self.stride = stride
 

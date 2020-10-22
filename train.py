@@ -15,13 +15,13 @@ from tensorboardX import SummaryWriter
 
 parse = argparse.ArgumentParser()
 parse.add_argument('--epoch', default=200)
-parse.add_argument('--lr', default=0.0001)
+parse.add_argument('--lr', default=0.003)
 parse.add_argument('--train_bs', default=64)
 parse.add_argument('--size', default=256)
 parse.add_argument('--test_bs', default=64)
 parse.add_argument('--num_workers', default=16)
-parse.add_argument('--root', default='')
-parse.add_argument('--model_path', default='')
+parse.add_argument('--root', default='/media/hb/d2221920-26b8-46d4-b6e5-b0eed6c25e6e/lyf毕设/data/classify')
+parse.add_argument('--model_path', default='/media/hb/d2221920-26b8-46d4-b6e5-b0eed6c25e6e/lyf毕设/model/cls_model')
 parse.add_argument('--best_accu', default=0)
 args = parse.parse_args()
 
@@ -101,6 +101,10 @@ def train():
                 val_accu = ((val_accu * i) + accu) / (i + 1)
             writer.add_scalar("valid/valid_accuracy", val_accu, epoch)
             writer.add_scalar("valid/valid_loss", val_loss, epoch)
+        writer.add_scalars("accuracy", {"train_accuracy": train_accu,
+                                        "valid_accuracy": val_accu}, epoch)
+        writer.add_scalars("loss", {"train_loss": train_loss,
+                                    "valid_loss": val_loss}, epoch)
         logger.info("val_loss=%.6f \t val_accu=%.6f" % (val_loss, val_accu))
         if val_accu > args.best_accu:
             args.best_accu = val_accu
@@ -122,7 +126,7 @@ for ds in dataset:
     data_path = os.path.join(args.root, ds)
     cls = [x for x in os.listdir(data_path) if os.path.isdir(os.path.join(data_path, x))]
     num_class = len(cls)
-    models = {"googlenet": googlenet.googlenet(num_class), "vgg16": vgg.vgg16_bn(num_class), "vgg19": vgg.vgg19_bn(num_class),
+    models = {"vgg16": vgg.vgg16_bn(num_class), "vgg19": vgg.vgg19_bn(num_class),
               "densenet121": densenet.densenet121(num_class), "densenet161": densenet.densenet161(num_class),
               "resnet34": resnet.resnet34(num_class), "resnet50": resnet.resnet50(num_class),
               "resnet101": resnet.resnet101(num_class), "seresnet34": senet.seresnet34(num_class),

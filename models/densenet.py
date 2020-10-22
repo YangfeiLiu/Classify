@@ -97,3 +97,9 @@ def densenet201(num_classes):
 
 def densenet161(num_classes):
     return DenseNet(Bottleneck, [6, 12, 36, 24], growth_rate=48, num_class=num_classes)
+
+
+if __name__ == '__main__':
+    net = densenet161(10)
+    x = torch.randn(size=[1, 3, 256, 256])
+    print(net(x))
