@@ -105,6 +105,7 @@ def train():
                                         "valid_accuracy": val_accu}, epoch)
         writer.add_scalars("loss", {"train_loss": train_loss,
                                     "valid_loss": val_loss}, epoch)
+        writer.add_scalars("lr", lr, epoch)
         logger.info("val_loss=%.6f \t val_accu=%.6f" % (val_loss, val_accu))
         if val_accu > args.best_accu:
             args.best_accu = val_accu
